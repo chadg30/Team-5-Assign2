@@ -9,13 +9,13 @@ def getusername_passwd():
     valpass=False
 
     username = input("Enter username: <email address> ")
-    while valuser != True:
+    while not valuser:
         if "@" in username and ".com" in username:
             valuser=True
         else:
             username = input("Incorrect, try again: ")
 
-    while valpass != True:
+    while not valpass:
         password = input("Enter your password. Enter at least 8 characters, with at least "
                          "one letter, one number, and a character from [#,$,%,*]\n")
         if "#" in password or "$" in password or "%" in password or "*" in password:
