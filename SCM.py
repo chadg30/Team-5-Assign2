@@ -8,6 +8,8 @@ def getusername_passwd():
     valuser=False
     valpass=False
 
+    sym = ['#', '$', '%', '*']
+
     username = input("Enter username: <email address> ")
     while not valuser:
         if "@" in username and ".com" in username:
@@ -17,9 +19,27 @@ def getusername_passwd():
 
     while not valpass:
         password = input("Enter your password. Enter at least 8 characters, with at least "
-                         "one letter, one number, and a character from [#,$,%,*]\n")
-        if "#" in password or "$" in password or "%" in password or "*" in password:
+                         "one uppercase letter, one lowercase letter, one number, and a character from [#,$,%,*]\n")
+        if len(password) > 8:
             valpass=True
+        else:
+            valpass=False
+        if any(char.isupper() for char in password):
+            valpass=True
+        else:
+            valpass=False
+        if any(char.islower() for char in password):
+            valpass = True
+        else:
+            valpass=False
+        if any(char.isdigit() for char in password):
+            valpass = True
+        else:
+            valpass=False
+        if any(char in sym for char in password):
+            valpass=True
+        else:
+            valpass=False
 
     return username, password
 
