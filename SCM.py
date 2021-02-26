@@ -5,49 +5,58 @@
 
 
 def getusername_passwd():
+    '''
+    Author: Chad Green
+    Inputs:
+    Outputs: Returns valid username and password entered by a user
+    '''
     valuser=False
     valpass=False
 
     sym = ['#', '$', '%', '*']
 
     username = input("Enter username: <email address> ")
-    while not valuser:
-        if "@" in username and ".com" in username:
-            valuser=True
-        else:
-            username = input("Incorrect, try again: ")
+    if "@" in username and ".com" in username:
+        valuser=True
+    else:
+        valuser=False
 
-    while not valpass:
-        password = input("Enter your password. Enter at least 8 characters, with at least "
-                         "one uppercase letter, one lowercase letter, one number, and a character from [#,$,%,*]\n")
-        if len(password) > 8:
-            valpass=True
-        else:
-            valpass=False
-        if any(char.isupper() for char in password):
-            valpass=True
-        else:
-            valpass=False
-        if any(char.islower() for char in password):
-            valpass = True
-        else:
-            valpass=False
-        if any(char.isdigit() for char in password):
-            valpass = True
-        else:
-            valpass=False
-        if any(char in sym for char in password):
-            valpass=True
-        else:
-            valpass=False
+    password = input("Enter your password. Enter at least 8 characters, with at least "
+                     "one uppercase letter, one lowercase letter, one number, and a character from [#,$,%,*]\n")
+    if len(password) > 8:
+        valpass=True
+    else:
+        valpass=False
+    if any(char.isupper() for char in password):
+        valpass=True
+    else:
+        valpass=False
+    if any(char.islower() for char in password):
+        valpass = True
+    else:
+        valpass=False
+    if any(char.isdigit() for char in password):
+        valpass = True
+    else:
+        valpass=False
+    if any(char in sym for char in password):
+        valpass=True
+    else:
+        valpass=False
 
-    return username, password
+    if valpass and valuser:
+        return username, password
+    else:
+        return None, None
 
 
 def main():
     vusername,vpassword=getusername_passwd()
-    print(vpassword)
-    print(vusername)
+    if vusername and vpassword:
+        print(vusername)
+        print(vpassword)
+    else:
+        print("invalid username or password")
 
 
 if __name__ == "__main__":
