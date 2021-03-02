@@ -4,10 +4,8 @@ Authors: Chad Green, David Leiden, Jenna Josselyn
 
 SCM takes a users password and username
 '''
-import json
-from Crypto.Util.Padding import pad
+
 from Crypto.Random import get_random_bytes
-from base64 import b64encode
 from Crypto.Cipher import AES
 
 
@@ -30,26 +28,32 @@ def getusername_passwd():
 
     password = input("Enter your password. Enter at least 8 characters, with at least "
                      "one uppercase letter, one lowercase letter, one number, and a character from [#,$,%,*]\n")
-    if len(password) > 8:
-        valpass=True
-    else:
-        valpass=False
-    if any(char.isupper() for char in password):
-        valpass=True
-    else:
-        valpass=False
-    if any(char.islower() for char in password):
-        valpass = True
-    else:
-        valpass=False
-    if any(char.isdigit() for char in password):
-        valpass = True
-    else:
-        valpass=False
-    if any(char in sym for char in password):
-        valpass=True
-    else:
-        valpass=False
+    while not valpass:
+        if len(password) > 8:
+            valpass=True
+        else:
+            valpass=False
+            break
+        if any(char.isupper() for char in password):
+            valpass=True
+        else:
+            valpass=False
+            break
+        if any(char.islower() for char in password):
+            valpass = True
+        else:
+            valpass=False
+            break
+        if any(char.isdigit() for char in password):
+            valpass = True
+        else:
+            valpass=False
+            break
+        if any(char in sym for char in password):
+            valpass=True
+        else:
+            valpass=False
+            break
 
     if valpass and valuser:
         return username, password
@@ -59,10 +63,9 @@ def getusername_passwd():
     
 def secure_store(username, password):
     '''
-    Author: David Leiden
+    Author: David Leiden/Chad Green
     Inputs: username and password
     Outputs: Displays if the username and password were stored in the file successfully
-    return:
     '''
 
     # encrypt password with AES algorithm
@@ -74,7 +77,7 @@ def secure_store(username, password):
     cipher = AES.new(key, AES.MODE_EAX)
     encrypted_password = cipher.encrypt(password.encode('utf-8'))
     # store username and encypted password in the file.
-    file = open('credential.dat', 'w')
+    file = open('credential.dat', 'a')
     file.write(username + '\n')
     file.write(str(encrypted_password) + '\n')
     # display message.
