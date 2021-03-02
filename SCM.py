@@ -58,11 +58,10 @@ def getusername_passwd():
 def secure_store(username, password):
     '''
     Author: David Leiden
-    Inputs: usernames and passwords
+    Inputs: username and password
     Outputs: Displays if the username and password were stored in the file successfully
-    :return:
+    return:
     '''
-
 
     # encrypt password with AES algorithm
     # password to encrypt
@@ -79,11 +78,11 @@ def secure_store(username, password):
     print(result)
     # store username and encypted password in the file.
     file = open('credential.dat', 'w')
-    file.write(username)
+    file.write(username )
     file.write(encryped_password)
     # display message.
-    print("username and password saved in ", outputfile)
-    #close the file
+    print("username and password saved in credentials.dat")
+    # close the file
     file.close()
 
 
