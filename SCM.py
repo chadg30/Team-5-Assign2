@@ -62,7 +62,9 @@ def secure_store(username, password):
     # encrypt password with AES algorithm
     encrypted_password = ''
     # store username and encypted password in the file.
-
+    file = open('credential.dat')
+    file.write(encryped_password)
+    file.close()
     # display message.
     print("username and password saved in ", outputfile)
 
