@@ -93,6 +93,7 @@ def main():
     if vusername and vpassword:
         print(vusername)
         print(vpassword)
+        secure_store(vusername, vpassword)
     else:
         print("invalid username or password")
 
