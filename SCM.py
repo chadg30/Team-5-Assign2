@@ -62,8 +62,7 @@ def secure_store(username, password):
     Outputs: Displays if the username and password were stored in the file successfully
     :return:
     '''
-    outputfile = "credential.dat"
-    fd = open(outputfile, 'ra')
+
 
     # encrypt password with AES algorithm
     # password to encrypt
