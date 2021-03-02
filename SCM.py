@@ -49,6 +49,23 @@ def getusername_passwd():
     else:
         return None, None
 
+def secure_store(username, password):
+    '''
+    Author:
+    Inputs:
+    Outputs:
+    :return:
+    '''
+    outputfile = "credential.dat"
+    fd = open(outputfile, 'ra')
+
+    # encrypt password with AES algorithm
+    encrypted_password = ''
+    # store username and encypted password in the file.
+
+    # display message.
+    print("username and password saved in ", outputfile)
+
 
 def main():
     vusername,vpassword=getusername_passwd()
