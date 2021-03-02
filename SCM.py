@@ -51,7 +51,7 @@ def getusername_passwd():
 
 def secure_store(username, password):
     '''
-    Author:
+    Author: David Leiden
     Inputs:
     Outputs:
     :return:
