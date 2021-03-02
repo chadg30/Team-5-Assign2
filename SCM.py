@@ -29,7 +29,7 @@ def getusername_passwd():
     password = input("Enter your password. Enter at least 8 characters, with at least "
                      "one uppercase letter, one lowercase letter, one number, and a character from [#,$,%,*]\n")
     while not valpass:
-        if len(password) > 8:
+        if len(password) >= 8:
             valpass=True
         else:
             valpass=False
@@ -90,8 +90,6 @@ def secure_store(username, password):
 def main():
     vusername,vpassword=getusername_passwd()
     if vusername and vpassword:
-        print(vusername)
-        print(vpassword)
         secure_store(vusername, vpassword)
     else:
         print("invalid username or password")
