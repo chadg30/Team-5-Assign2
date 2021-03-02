@@ -73,8 +73,9 @@ def secure_store(username, password):
     data = password
     # key to encrypt with
     key = get_random_bytes(16)
-    print(key)
+    # create the cypher
     cipher = AES.new(key, AES.MODE_EAX)
+    # encrypt the password
     encrypted_password = cipher.encrypt(password.encode('utf-8'))
     # store username and encypted password in the file.
     file = open('credential.dat', 'a')
