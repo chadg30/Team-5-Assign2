@@ -27,7 +27,7 @@ def getusername_passwd():
         valuser=False
 
     password = input("Enter your password. Enter at least 8 characters, with at least "
-                     "one uppercase letter, one lowercase letter, one number, and a character from [#,$,%,*]\n")
+                     "one uppercase letter, one lowercase letter, one number, and a character from [#,@,%,*]\n")
     while not valpass:
         if len(password) >= 8:
             valpass=True
@@ -82,7 +82,7 @@ def secure_store(username, password):
     file.write(username + '\n')
     file.write(str(encrypted_password) + '\n')
     # display message.
-    print("username and password saved in credentials.dat")
+    print("Username and password saved in credentials.dat")
     # close the file
     file.close()
 
@@ -92,7 +92,7 @@ def main():
     if vusername and vpassword:
         secure_store(vusername, vpassword)
     else:
-        print("invalid username or password")
+        print("Invalid username or password")
 
 
 if __name__ == "__main__":
