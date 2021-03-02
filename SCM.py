@@ -1,7 +1,9 @@
-# This is a sample Python script.
+'''
+Date: 3/2/2021
+Authors: Chad Green, David Leiden, Jenna Josselyn
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+SCM takes a users password and username
+'''
 import json
 from Crypto.Util.Padding import pad
 from Crypto.Random import get_random_bytes
@@ -77,7 +79,7 @@ def secure_store(username, password):
     result = json.dumps({'iv': iv, 'ciphertext': ct})
     print(result)
     # store username and encypted password in the file.
-    file = open('credential.dat', 'w')
+    file = open('credential.dat', 'ra')
     file.write(username )
     file.write(encryped_password)
     # display message.
