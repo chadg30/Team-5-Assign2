@@ -49,11 +49,12 @@ def getusername_passwd():
     else:
         return None, None
 
+    
 def secure_store(username, password):
     '''
     Author: David Leiden
     Inputs:
-    Outputs:
+    Outputs: Displays if the username and password were stored in the file successfully
     :return:
     '''
     outputfile = "credential.dat"
