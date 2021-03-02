@@ -58,7 +58,7 @@ def getusername_passwd():
 def secure_store(username, password):
     '''
     Author: David Leiden
-    Inputs:
+    Inputs: usernames and passwords
     Outputs: Displays if the username and password were stored in the file successfully
     :return:
     '''
