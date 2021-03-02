@@ -20,7 +20,7 @@ def getusername_passwd():
     valuser=False
     valpass=False
 
-    sym = ['#', '$', '%', '*']
+    sym = ['#', '@', '%', '*']
 
     username = input("Enter username: <email address> ")
     if "@" in username and ".com" in username:
@@ -71,17 +71,12 @@ def secure_store(username, password):
     # key to encrypt with
     key = get_random_bytes(16)
     print(key)
-    cipher = AES.new(key, AES.MODE_CBC)
-    encryped_password = cipher.encrypt(pad(data, AES.block_size))
-
-    iv = b64encode(cipher.iv).decode('utf-8')
-    ct = b64encode(encryped_password).decode('utf-8')
-    result = json.dumps({'iv': iv, 'ciphertext': ct})
-    print(result)
+    cipher = AES.new(key, AES.MODE_EAX)
+    encrypted_password = cipher.encrypt(password.encode('utf-8'))
     # store username and encypted password in the file.
-    file = open('credential.dat', 'ra')
-    file.write(username )
-    file.write(encryped_password)
+    file = open('credential.dat', 'w')
+    file.write(username + '\n')
+    file.write(str(encrypted_password) + '\n')
     # display message.
     print("username and password saved in credentials.dat")
     # close the file
