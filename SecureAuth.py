@@ -6,6 +6,7 @@ and defined functions under @TODO annotation, according to the logic/functional 
 Students are not expected to midify main() function.
 '''
 import hashlib
+
 def secure_hashed_passwd(username, passwd):
     import hashlib, uuid
     import os
