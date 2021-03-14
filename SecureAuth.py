@@ -18,15 +18,16 @@ def secure_hashed_passwd(username, passwd):
     :param passwd: a plain text password
     :return: True if given values are stored successfully in outfile var; else returns False
     '''
-    sha3= hashlib.sha3_224
-    sha3.update()
+    sha3 = hashlib.sha3_224
 
-    #use salt and pepper to hash 'hpasswd' using sha-3-224 algorithm
-    salt= b62encode(os.urandom(16)) # Add salt
-
+    # Add salt
+    salt = os.urandom(16)
     # add pepper
-
-    #return salt,pepper,saltpepperdigest
+    pepper = os.urandom(16)
+    # use salt and pepper to hash 'hpasswd' using sha-3-224 algorithm
+    sha3.update(salt + pepper + passwd)
+    # return salt,pepper,saltpepperdigest
+    return salt, pepper, sha3.hexdigest()
 
 
 def verify_hashed_passwd(username, passwd):
@@ -43,6 +44,23 @@ def verify_hashed_passwd(username, passwd):
     #open the file to read
     fd=open(infile,"r")
     #read the infile line by line to retrive a matching row with first field value of username
+
+    SHA3 = hashlib.sha3_224
+
+    for line in fd:
+        c = line.split(",")
+        if c[0] is username:
+            salt = c[1]
+            pepper = c[2]
+            hpass = c[3]
+
+        SHA3.update(salt+pepper+passwd)
+        tempPass = SHA3.hexdigest()
+
+        if tempPass is hpass:
+            return True
+        else:
+            return False
 
     #To read the file line by line, use a for loop.
     #Hint: split each line by a comma "," to get list of username, salt, pepper, and stored_hashpassword values.
