@@ -13,15 +13,16 @@ def secure_hashed_passwd(username, passwd):
 
     '''
     @TODO: Students are required to implement this function.
-    using salt+paper+sha3-224 algorithm
+    using salt+pepper+sha3-224 algorithm
     :param username: string repr of username
     :param passwd: a plain text password
     :return: True if given values are stored successfully in outfile var; else returns False
     '''
-
+    sha3= hashlib.sha3_224
+    sha3.update()
 
     #use salt and pepper to hash 'hpasswd' using sha-3-224 algorithm
-    # Add salt
+    salt= b62encode(os.urandom(16)) # Add salt
 
     # add pepper
 
