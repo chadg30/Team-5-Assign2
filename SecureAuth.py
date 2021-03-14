@@ -6,6 +6,8 @@ and defined functions under @TODO annotation, according to the logic/functional 
 Students are not expected to midify main() function.
 '''
 import hashlib
+from typing import Any, Union
+
 
 def secure_hashed_passwd(username, passwd):
     import hashlib, uuid
@@ -21,11 +23,13 @@ def secure_hashed_passwd(username, passwd):
     sha3 = hashlib.sha3_224
 
     # Add salt
-    salt = os.urandom(16)
+    salt = uuid.uuid4().hex
     # add pepper
-    pepper = os.urandom(16)
+    pepper = uuid.uuid4().hex
     # use salt and pepper to hash 'hpasswd' using sha-3-224 algorithm
-    sha3.update(salt + pepper + passwd)
+    passwd.encode('utf-8')
+    hashpass = salt + pepper + passwd
+    sha3.update(hashpass)
     # return salt,pepper,saltpepperdigest
     return salt, pepper, sha3.hexdigest()
 
