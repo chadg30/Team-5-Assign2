@@ -1,9 +1,10 @@
 '''
-Author: Naresh Adhikari, Sru
-This is a skeletal program that students need to implement the declared
-and defined functions under @TODO annotation, according to the logic/functional requirements stated in assigment-2.pdf.
-
-Students are not expected to midify main() function.
+Authors: Chad Green, David Leiden, Jenna Josselyn
+Date: 3/15/2021
+This is a program with two functions. secure_hashed_passwd takes usernames and passwords, then encrypts them with SHA-3-224 algorithm.
+The username and password is then saved in the hlogins.dat file in main.
+Verify_hashed_passwd finds a username in the hlogins.dat file, hashes the plain text passwd, then compares it to the hashed passwd
+in the hlogins.dat file.
 '''
 import hashlib
 
@@ -19,6 +20,7 @@ def secure_hashed_passwd(username, passwd):
     :param passwd: a plain text password
     :return: True if given values are stored successfully in outfile var; else returns False
     '''
+    # sets up the hash algorithm
     sha = hashlib.sha3_224()
 
     # Add salt
@@ -26,7 +28,6 @@ def secure_hashed_passwd(username, passwd):
     # add pepper
     pepper = uuid.uuid4().hex
     # use salt and pepper to hash 'hpasswd' using sha-3-224 algorithm
-    passwd.encode('utf-8')
     sha.update(bytes(salt, 'utf-8') + bytes(pepper, 'utf-8') + bytes(passwd, 'utf-8'))
     # return salt,pepper,saltpepperdigest
     return salt, pepper, sha.hexdigest()
@@ -41,37 +42,40 @@ def verify_hashed_passwd(username, passwd):
     :param hpasswd:
     :return:
     '''
-    #databse file with username and hashed-password.
+    # databse file with username and hashed-password.
     infile="hlogins.dat"
-    #open the file to read
+    # open the file to read
     fd=open(infile,"r")
-    #read the infile line by line to retrive a matching row with first field value of username
-
-    match = False
+    # read the infile line by line to retrive a matching row with first field value of username
+    # check_match makes sure the username is found in the file so no empty info it retrieved
+    check_match = False
     sha3 = hashlib.sha3_224()
 
-
     for line in fd:
-        c = line.split(',')
+        section = line.split(',')  # split the line
         if username in line:
-            match = True
-            salt = c[1]
-            pepper = c[2]
-            hpass = c[3]
+            check_match = True
+            salt = section[1]
+            pepper = section[2]
+            hpassword = section[3]
 
             sha3.update(bytes(salt, 'utf-8') + bytes(pepper, 'utf-8') + bytes(passwd, 'utf-8'))
-            temppass = sha3.hexdigest()
+            tempo_hash = sha3.hexdigest()
 
-    if match:
-        if temppass == hpass:
+    if check_match:
+        if tempo_hash == hpassword:
+            print('Authentication Successful')
             return True
         else:
+            print('Authentication Unsuccessful')
             return False
+    else:
+        print('Authentication Unsuccessful')
 
-    #To read the file line by line, use a for loop.
-    #Hint: split each line by a comma "," to get list of username, salt, pepper, and stored_hashpassword values.
-    #implement other logics inside loop.
-    fd.close()
+    # To read the file line by line, use a for loop.
+    # Hint: split each line by a comma "," to get list of username, salt, pepper, and stored_hashpassword values.
+    # implement other logics inside loop.
+    fd.close() # closes the file to make sure none of the data is affected
 
 def main():
     '''Do not modify this function.'''
