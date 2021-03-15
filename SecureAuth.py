@@ -53,7 +53,7 @@ def verify_hashed_passwd(username, passwd):
 
     for line in fd:
         c = line.split(',')
-        if c[0] == username:
+        if username in line:
             match = True
             salt = c[1]
             pepper = c[2]
