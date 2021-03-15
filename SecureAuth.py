@@ -6,7 +6,6 @@ and defined functions under @TODO annotation, according to the logic/functional 
 Students are not expected to midify main() function.
 '''
 import hashlib
-from typing import Any, Union
 
 
 def secure_hashed_passwd(username, passwd):
@@ -20,7 +19,7 @@ def secure_hashed_passwd(username, passwd):
     :param passwd: a plain text password
     :return: True if given values are stored successfully in outfile var; else returns False
     '''
-    sha3 = hashlib.sha3_224
+    sha = hashlib.sha3_224()
 
     # Add salt
     salt = uuid.uuid4().hex
@@ -28,10 +27,9 @@ def secure_hashed_passwd(username, passwd):
     pepper = uuid.uuid4().hex
     # use salt and pepper to hash 'hpasswd' using sha-3-224 algorithm
     passwd.encode('utf-8')
-    hashpass = salt + pepper + passwd
-    sha3.update(hashpass)
+    sha.update(bytes(salt, 'utf-8') + bytes(pepper, 'utf-8') + bytes(passwd, 'utf-8'))
     # return salt,pepper,saltpepperdigest
-    return salt, pepper, sha3.hexdigest()
+    return salt, pepper, sha.hexdigest()
 
 
 def verify_hashed_passwd(username, passwd):
@@ -49,22 +47,24 @@ def verify_hashed_passwd(username, passwd):
     fd=open(infile,"r")
     #read the infile line by line to retrive a matching row with first field value of username
 
-    SHA3 = hashlib.sha3_224
+    sha3 = hashlib.sha3_224()
 
-    for line in fd:
-        c = line.split(",")
-        if c[0] is username:
+    for str in fd:
+        print(str)
+        c = str.split(",")
+        if c[0] == username:
             salt = c[1]
             pepper = c[2]
             hpass = c[3]
 
-        SHA3.update(salt+pepper+passwd)
-        tempPass = SHA3.hexdigest()
+    passwd.encode('utf-8')
+    sha3.update(bytes(salt, 'utf-8')+bytes(pepper, 'utf-8')+ bytes(passwd, 'utf-8'))
+    temppass = sha3.hexdigest()
 
-        if tempPass is hpass:
-            return True
-        else:
-            return False
+    if temppass is hpass:
+        return True
+    else:
+        return False
 
     #To read the file line by line, use a for loop.
     #Hint: split each line by a comma "," to get list of username, salt, pepper, and stored_hashpassword values.
