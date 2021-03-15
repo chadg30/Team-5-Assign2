@@ -47,28 +47,31 @@ def verify_hashed_passwd(username, passwd):
     fd=open(infile,"r")
     #read the infile line by line to retrive a matching row with first field value of username
 
+    match = False
     sha3 = hashlib.sha3_224()
 
-    for str in fd:
-        print(str)
-        c = str.split(",")
+
+    for line in fd:
+        c = line.split(',')
         if c[0] == username:
+            match = True
             salt = c[1]
             pepper = c[2]
             hpass = c[3]
 
-    passwd.encode('utf-8')
-    sha3.update(bytes(salt, 'utf-8')+bytes(pepper, 'utf-8')+ bytes(passwd, 'utf-8'))
-    temppass = sha3.hexdigest()
+            sha3.update(bytes(salt, 'utf-8') + bytes(pepper, 'utf-8') + bytes(passwd, 'utf-8'))
+            temppass = sha3.hexdigest()
 
-    if temppass is hpass:
-        return True
-    else:
-        return False
+    if match:
+        if temppass == hpass:
+            return True
+        else:
+            return False
 
     #To read the file line by line, use a for loop.
     #Hint: split each line by a comma "," to get list of username, salt, pepper, and stored_hashpassword values.
     #implement other logics inside loop.
+    fd.close()
 
 def main():
     '''Do not modify this function.'''
